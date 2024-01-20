@@ -9,8 +9,10 @@ from university.serializers import StudentSerializer
 # Create your views here.
 
 
-class StudentView(ReadOnlyModelViewSet,
-                  mixins.UpdateModelMixin,
-                  mixins.CreateModelMixin, ):
+class StudentView(
+    ReadOnlyModelViewSet,
+    mixins.UpdateModelMixin,
+    mixins.CreateModelMixin,
+):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer

@@ -16,4 +16,3 @@ class CustomerView(
 ):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
-

@@ -42,9 +42,4 @@ class ContractPostSerializer(serializers.ModelSerializer):
 class ContractStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContractStatus
-        fields = [
-            "status",
-            "contract",
-            "status_date_added",
-            "status_date_updated"
-        ]
+        fields = ["status", "contract", "status_date_added", "status_date_updated"]
