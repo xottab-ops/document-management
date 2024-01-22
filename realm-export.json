@@ -83,6 +83,15 @@
         "clientRole": false,
         "containerId": "e6872fbe-3543-4944-991d-af491f6ba6a7",
         "attributes": {}
+      },
+      {
+        "id": "439dc7b2-02bb-4efb-aa4f-3dbb7e0aec3a",
+        "name": "xottab-role",
+        "description": "",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "e6872fbe-3543-4944-991d-af491f6ba6a7",
+        "attributes": {}
       }
     ],
     "client": {
@@ -250,14 +259,14 @@
             "client": {
               "realm-management": [
                 "view-realm",
-                "manage-authorization",
                 "impersonation",
+                "manage-authorization",
                 "manage-users",
                 "manage-identity-providers",
                 "manage-events",
                 "query-realms",
-                "view-users",
                 "view-events",
+                "view-users",
                 "query-groups",
                 "query-users",
                 "view-identity-providers",
@@ -419,28 +428,11 @@
       "name": "xottab",
       "path": "/xottab",
       "realmRoles": [
-        "default-roles-final-project"
+        "xottab-role"
       ],
       "clientRoles": {
         "xottab": [
           "newrole"
-        ],
-        "realm-management": [
-          "view-realm",
-          "view-events",
-          "view-users",
-          "view-identity-providers",
-          "view-authorization",
-          "view-clients"
-        ],
-        "broker": [
-          "read-token"
-        ],
-        "account": [
-          "view-applications",
-          "view-groups",
-          "view-consent",
-          "view-profile"
         ]
       }
     }
@@ -634,7 +626,9 @@
       "publicClient": true,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
-      "attributes": {},
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": false,
       "nodeReRegistrationTimeout": 0,
@@ -672,7 +666,9 @@
       "publicClient": false,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
-      "attributes": {},
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": false,
       "nodeReRegistrationTimeout": 0,
@@ -710,7 +706,9 @@
       "publicClient": false,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
-      "attributes": {},
+      "attributes": {
+        "post.logout.redirect.uris": "+"
+      },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": false,
       "nodeReRegistrationTimeout": 0,
@@ -823,7 +821,8 @@
       "frontchannelLogout": true,
       "protocol": "openid-connect",
       "attributes": {
-        "client.secret.creation.time": "1705657736",
+        "client.secret.creation.time": "1705833201",
+        "post.logout.redirect.uris": "+",
         "oauth2.device.authorization.grant.enabled": "false",
         "backchannel.logout.revoke.offline.tokens": "false",
         "use.refresh.tokens": "true",
@@ -920,6 +919,7 @@
           "config": {
             "introspection.token.claim": "true",
             "multivalued": "true",
+            "userinfo.token.claim": "true",
             "user.attribute": "foo",
             "id.token.claim": "true",
             "access.token.claim": "true",
@@ -1243,7 +1243,25 @@
         "display.on.consent.screen": "true",
         "gui.order": "",
         "consent.screen.text": ""
-      }
+      },
+      "protocolMappers": [
+        {
+          "id": "516eb719-c818-4885-8d89-5f6f1deb7445",
+          "name": "groups",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "introspection.token.claim": "true",
+            "multivalued": "true",
+            "user.attribute": "foo",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "groups",
+            "jsonType.label": "String"
+          }
+        }
+      ]
     },
     {
       "id": "dcbe2bc5-1178-4c3b-80dc-bc9567eeb8ff",
@@ -1399,7 +1417,8 @@
           "config": {
             "id.token.claim": "true",
             "introspection.token.claim": "true",
-            "access.token.claim": "true"
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
           }
         }
       ]
@@ -1450,14 +1469,14 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-usermodel-property-mapper",
-            "oidc-address-mapper",
-            "oidc-usermodel-attribute-mapper",
-            "saml-user-property-mapper",
             "oidc-full-name-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
+            "oidc-usermodel-property-mapper",
+            "saml-user-attribute-mapper",
+            "saml-user-property-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "oidc-address-mapper",
             "saml-role-list-mapper",
-            "saml-user-attribute-mapper"
+            "oidc-sha256-pairwise-sub-mapper"
           ]
         }
       },
@@ -1484,13 +1503,13 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
-            "oidc-usermodel-attribute-mapper",
-            "oidc-address-mapper",
-            "oidc-sha256-pairwise-sub-mapper",
-            "oidc-full-name-mapper",
-            "saml-user-property-mapper",
             "saml-role-list-mapper",
+            "saml-user-property-mapper",
+            "oidc-address-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "oidc-full-name-mapper",
             "saml-user-attribute-mapper",
+            "oidc-sha256-pairwise-sub-mapper",
             "oidc-usermodel-property-mapper"
           ]
         }
@@ -2224,8 +2243,8 @@
   "attributes": {
     "cibaBackchannelTokenDeliveryMode": "poll",
     "cibaAuthRequestedUserHint": "login_hint",
-    "oauth2DevicePollingInterval": "5",
     "clientOfflineSessionMaxLifespan": "0",
+    "oauth2DevicePollingInterval": "5",
     "clientSessionIdleTimeout": "0",
     "actionTokenGeneratedByUserLifespan-execute-actions": "",
     "actionTokenGeneratedByUserLifespan-verify-email": "",
