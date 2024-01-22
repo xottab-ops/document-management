@@ -77,7 +77,7 @@ class KeycloakAuthenticationBackend(BaseAuthentication):
                 algorithms=[ALGORITHM],
                 options={"verify_signature": False},
             )
-        except jwt.exceptions.ExpiredSignatureError:
+        except Exception:
             return None
 
 
