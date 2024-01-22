@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from rest_framework import mixins
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
+from final_project_django.authorization import KeycloakAuthenticationBackend
 from university.models import Student
 from university.serializers import StudentSerializer
 
@@ -14,5 +16,7 @@ class StudentView(
     mixins.UpdateModelMixin,
     mixins.CreateModelMixin,
 ):
+    authentication_classes = (KeycloakAuthenticationBackend,)
+    permission_classes = [IsAuthenticated]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
