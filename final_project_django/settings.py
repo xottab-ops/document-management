@@ -49,7 +49,6 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -132,4 +131,17 @@ AUTH_USER_MODEL = "users.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+        "final_project_django.authorization.KeycloakAuthenticationBackend",
+    ],
+}
+
+
+SPECTACULAR_SETTINGS = {
+    "SCHEMA_PATH_FUNC": "final_project_django.authorization.KeycloakAuthenticationScheme",
+    "SERVE_INCLUDE_SCHEMA": True,
+    "SERVE_AUTHENTICATION": [
+        "final_project_django.authorization.KeycloakAuthenticationBackend"
+    ],
 }
