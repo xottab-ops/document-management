@@ -4,6 +4,8 @@ services:
   postgres:
     image: postgres
     container_name: ${POSTGRESQL_HOST}
+    ports:
+       - "5432:5432"
     environment:
       POSTGRES_DB: ${POSTGRESQL_DB}
       POSTGRES_USER: ${POSTGRESQL_USER}
@@ -19,7 +21,11 @@ services:
       - postgres
       - keycloak
     environment:
-      DB_HOST: ${POSTGRESQL_HOST}
+      POSTGRESQL_HOST: ${POSTGRESQL_HOST}
+      POSTGRES_DB: ${POSTGRESQL_DB}
+      POSTGRES_USER: ${POSTGRESQL_USER}
+      POSTGRESQL_PASS: ${POSTGRESQL_PASS}
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET}
 
   keycloak:
     image: quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}

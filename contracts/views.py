@@ -1,6 +1,5 @@
-from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import mixins
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
