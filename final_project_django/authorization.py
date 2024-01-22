@@ -4,7 +4,7 @@ from drf_spectacular.extensions import (
     OpenApiAuthenticationExtension,
 )
 from drf_spectacular.plumbing import build_bearer_security_scheme_object
-from rest_framework.authentication import TokenAuthentication, BaseAuthentication
+from rest_framework.authentication import BaseAuthentication
 from rest_framework import exceptions
 
 from users.models import User
@@ -49,7 +49,7 @@ class KeycloakAuthenticationBackend(BaseAuthentication):
                 algorithms=[ALGORITHM],
                 options={"verify_signature": False},
             )
-        except Exception as e:
+        except Exception:
             return None
 
 
