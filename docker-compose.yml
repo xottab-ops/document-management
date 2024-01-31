@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    container_name: ${POSTGRESQL_HOST}
+    ports:
+       - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRESQL_DB}
+      POSTGRES_USER: ${POSTGRESQL_USER}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASS}
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:80"
+    depends_on:
+      - postgres
+      - keycloak
+    environment:
+      POSTGRESQL_HOST: ${POSTGRESQL_HOST}
+      POSTGRES_DB: ${POSTGRESQL_DB}
+      POSTGRES_USER: ${POSTGRESQL_USER}
+      POSTGRESQL_PASS: ${POSTGRESQL_PASS}
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET}
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
+    command: start-dev --import-realm
+    volumes:
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://${POSTGRESQL_HOST}:5432/${POSTGRESQL_DB}
+      KC_DB_USERNAME: ${POSTGRESQL_USER}
+      KC_DB_PASSWORD: ${POSTGRESQL_PASS}
+      ENV KC_HOSTNAME: localhost
+      ENV KC_HOSTNAME_ADMIN: localhost
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_NAME}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_HTTP_HOST: 0.0.0.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
