@@ -1,5 +1,4 @@
-# Django Final Project
-
+# Dockument management (Backend Service)
 ## Install
 
 1. Clone this repository on your PC. You must have a preset Docker.
