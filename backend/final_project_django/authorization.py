@@ -61,6 +61,8 @@ class KeycloakAuthenticationBackend(BaseAuthentication):
         if not username:
             raise exceptions.AuthenticationFailed("No username")
         groups = decoded.get("groups")
+        print(groups)
+        print("xottab-role" not in groups)
         if "xottab-role" not in groups:
             raise exceptions.PermissionDenied(
                 "You do not have permission to use this method"
