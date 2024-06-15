@@ -3,7 +3,7 @@ from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from final_project_django.authorization import KeycloakAuthenticationBackend
+from document_management_backend.authorization import KeycloakAuthenticationBackend
 from university.models import Student
 from university.serializers import StudentSerializer
 

@@ -9,7 +9,7 @@ from contracts.serializers import (
     ContractStatusSerializer,
     ContractPostSerializer,
 )
-from final_project_django.authorization import KeycloakAuthenticationBackend
+from document_management_backend.authorization import KeycloakAuthenticationBackend
 
 
 # Create your views here.
