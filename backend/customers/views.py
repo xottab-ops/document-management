@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from customers.models import Customer
 from customers.serializers import CustomerSerializer
-from final_project_django.authorization import KeycloakAuthenticationBackend
+from document_management_backend.authorization import KeycloakAuthenticationBackend
 
 
 # Create your views here.

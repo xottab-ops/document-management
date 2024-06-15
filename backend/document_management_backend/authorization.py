@@ -89,7 +89,7 @@ class KeycloakAuthenticationScheme(OpenApiAuthenticationExtension):
     an authorization scheme for drf_spectacular
     """
 
-    target_class = "final_project_django.authorization.KeycloakAuthenticationBackend"
+    target_class = "document_management_backend.authorization.KeycloakAuthenticationBackend"
     name = "BearerToken"
     priority = -1
     match_subclasses = True
