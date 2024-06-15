@@ -82,6 +82,9 @@ WSGI_APPLICATION = "final_project_django.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "OPTIONS": {
+            "options": f"-c search_path={os.getenv("POSTGRESQL_WEB_SCHEMA", "backend")},public"
+        },
         "NAME": os.getenv("POSTGRESQL_DB", "final"),
         "USER": os.getenv("POSTGRESQL_USER", "user1"),
         "PASSWORD": os.getenv("POSTGRESQL_PASS", "user1"),
