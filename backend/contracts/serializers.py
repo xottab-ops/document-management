@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from contracts.models import Contract, ContractStatus
+from contracts.models import Contract
 from customers.serializers import CustomerSerializer
 from university.serializers import StudentSerializer, StudyGroupSerializer
 from users.serializers import UserSerializer
@@ -38,8 +38,3 @@ class ContractPostSerializer(serializers.ModelSerializer):
             "contract_price",
         ]
 
-
-class ContractStatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ContractStatus
-        fields = ["status", "contract", "status_date_added", "status_date_updated"]

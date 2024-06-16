@@ -5,11 +5,12 @@ from django.db import models
 
 class Student(models.Model):
     name = models.CharField(max_length=64)
-    phone_number = models.IntegerField()
+    phone_number = models.CharField(max_length=32)
 
 
 class Discipline(models.Model):
     name = models.CharField(max_length=64)
+    discipline_price = models.IntegerField()
     lessons_per_week = models.IntegerField()
     lesson_time = models.IntegerField()
 
