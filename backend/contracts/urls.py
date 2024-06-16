@@ -1,10 +1,9 @@
 from rest_framework.routers import SimpleRouter
 
-from contracts.views import ContractsView, ContractStatusView
+from contracts.views import ContractsView
 
 router = SimpleRouter()
 
 router.register("contracts", ContractsView)
-router.register("contract-statuses", ContractStatusView)
 
 urlpatterns = router.urls
