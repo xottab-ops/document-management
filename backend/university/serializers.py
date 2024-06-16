@@ -12,7 +12,7 @@ class StudentSerializer(serializers.ModelSerializer):
 class DisciplineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discipline
-        fields = ["name", "lessons_per_week", "lesson_time"]
+        fields = ["name", "lessons_per_week", "lesson_time", "discipline_price"]
 
 
 class StudyGroupSerializer(serializers.ModelSerializer):

@@ -3,10 +3,9 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from contracts.models import Contract, ContractStatus
+from contracts.models import Contract
 from contracts.serializers import (
     ContractSerializer,
-    ContractStatusSerializer,
     ContractPostSerializer,
 )
 from document_management_backend.authorization import KeycloakAuthenticationBackend
@@ -25,12 +24,3 @@ class ContractsView(ReadOnlyModelViewSet, mixins.CreateModelMixin):
         if self.action == "create":
             return ContractPostSerializer
         return super().get_serializer_class()
-
-
-class ContractStatusView(
-    ReadOnlyModelViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin
-):
-    authentication_classes = (KeycloakAuthenticationBackend,)
-    permission_classes = [IsAuthenticated]
-    queryset = ContractStatus.objects.all()
-    serializer_class = ContractStatusSerializer
