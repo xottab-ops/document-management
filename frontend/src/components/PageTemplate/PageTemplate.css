@@ -1,0 +1,13 @@
+.page-template {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header, .footer-buttons {
+  flex-shrink: 0;
+}
+
+.main-content {
+  flex-grow: 1;
+}

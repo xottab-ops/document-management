@@ -1,0 +1,19 @@
+.header {
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+.header nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.header nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+.header nav ul li .active {
+  font-weight: bold;
+  color: #ff7f7f;
+}
