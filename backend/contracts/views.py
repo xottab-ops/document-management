@@ -10,12 +10,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import render_to_string
 
-from contracts.models import Contract
+from contracts.models import Contract, Address
 from contracts.serializers import (
     ContractSerializer,
     ContractPostSerializer,
     ContractPrintSerializer,
     NotificationSerializer,
+    AddressSerializer,
 )
 from document_management_backend.authorization import KeycloakAuthenticationBackend
 
@@ -82,3 +83,10 @@ class SendNotificationAPIView(ViewSet):
             return Response({'message': 'Уведомление успешно отправлено'})
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class AddressViewSet(ReadOnlyModelViewSet):
+    authentication_classes = (KeycloakAuthenticationBackend,)
+    permission_classes = [IsAuthenticated]
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
