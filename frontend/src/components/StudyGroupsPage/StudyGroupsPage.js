@@ -37,6 +37,7 @@ const StudyGroupsPage = ({ apiEndpoint, token }) => {
         'discipline_name': studyGroup.discipline.name,
         'lessons_per_week': studyGroup.discipline.lessons_per_week,
         'lesson_time': studyGroup.discipline.lesson_time,
+        'grade': studyGroup.grade
     });
 
     return (

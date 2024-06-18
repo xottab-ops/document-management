@@ -73,6 +73,7 @@ const ContractsPage = ({ apiEndpoint, token }) => {
     'student_name': contract.student.name,
     'contract_creation_date': contract.contract_creation_date,
     'contract_price': contract.contract_price,
+    'address': contract.address.address,
   });
 
   return (
@@ -95,7 +96,8 @@ const ContractsPage = ({ apiEndpoint, token }) => {
           isVisible={isOverlayViewVisible}
           onClose={handleCloseViewOverlay}
           contract={selectedContract}
-          contracts={contracts}/>
+          contracts={contracts}
+          token={token}/>
 
 
     </PageTemplate>

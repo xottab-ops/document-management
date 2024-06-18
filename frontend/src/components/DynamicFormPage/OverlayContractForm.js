@@ -55,12 +55,14 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
     return (
         <div id="overlay">
             <div className="overlay-content">
+                <h2>Новый договор</h2>
                 <Formik
                     initialValues={emptyValues}
                     validationSchema={contractFields}
                     onSubmit={handleSubmit}
                 >
                     {({ isSubmitting, setFieldValue, values }) => (
+
                         <Form>
                             <div className="form-group">
                                 <label htmlFor="customer">Заказчик:</label>
@@ -113,11 +115,6 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
                                 <ErrorMessage name="contract_expiration_date" component="div" className="error" />
                             </div>
 
-                            <div className="form-group">
-                                <label>Информация:</label>
-                                <Field type="text" name="info" readOnly />
-                            </div>
-
                             {errorMessage.length > 0 && (
                                 <div className="error-message">
                                     {errorMessage.map((error, index) => (
@@ -138,14 +135,50 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
 };
 
 
-const OverlayContractViewForm = ({ isVisible, onClose, contract, contracts }) => {
+const OverlayContractViewForm = ({ isVisible, onClose, contract, contracts, token }) => {
     if (!isVisible) {
         return null;
     }
 
-    const handlePrint = () => {
-        window.print();
+    const handleSendEmail = () => {
+        const content = {
+            "email": selectedContract.customer.email,
+            "amount": selectedContract.contract_price,
+            "full_name": selectedContract.customer.name,
+            "contract_number": selectedContract.id,
+        }
+        axios.post('http://localhost:5000/send_notification/send_notification/', content, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        }).then(r => {
+            alert('Уведомление успешно отправлено на почту!');
+            onClose();
+        }).catch(error => {
+            console.error('Ошибка при отправке уведомления:', error);
+            alert('Произошла ошибка при отправке уведомления.');
+        })
     };
+
+    const handleSave = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/generate_document/${selectedContract.id}/generate_document/`, {
+                responseType: 'blob',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `contract_${selectedContract.id}.docx`);
+            document.body.appendChild(link);
+            link.click();
+        } catch (error) {
+            console.error('Ошибка при скачивании документа:', error);
+        }
+    }
 
     let selectedContract = contracts.find(selectedContract => selectedContract.id === contract.id)
 
@@ -157,6 +190,7 @@ const OverlayContractViewForm = ({ isVisible, onClose, contract, contracts }) =>
         
         Заказчик: ${selectedContract.customer.name}
         Телефон заказчика: ${selectedContract.customer.phone_number}
+        Электронная почта заказчика: ${selectedContract.customer.email}
         Паспорт заказчика: ${selectedContract.customer.passport_number}
         Дата выдачи паспорта: ${selectedContract.customer.passport_issue_date}
         
@@ -168,6 +202,10 @@ const OverlayContractViewForm = ({ isVisible, onClose, contract, contracts }) =>
         Создатель договора: ${selectedContract.creator.first_name} ${selectedContract.creator.last_name}
         Дата создания договора: ${selectedContract.contract_creation_date}
         Дата окончания договора: ${selectedContract.contract_expiration_date}
+        
+        Место обучения: ${selectedContract.address.address}
+        
+        Форма обучения: ${ selectedContract.is_online ? "Online" : "Очно"}
         
         Стоимость договора: ${selectedContract.contract_price} руб.
     `;
@@ -193,7 +231,9 @@ const OverlayContractViewForm = ({ isVisible, onClose, contract, contracts }) =>
 
                         <div className="form-buttons">
                             <button type="button" onClick={onClose}>Закрыть</button>
-                            <button type="button" onClick={handlePrint}>Напечатать</button>
+                            <button type="button" onClick={handleSave}>Сохранить в Word</button>
+                            <button type="button" onClick={handleSendEmail}>Отправить уведомление
+                            </button>
                         </div>
                     </Form>
                 </Formik>
