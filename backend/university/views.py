@@ -21,7 +21,7 @@ class StudentView(
 ):
     authentication_classes = (KeycloakAuthenticationBackend,)
     permission_classes = [IsAuthenticated]
-    queryset = Student.objects.all()
+    queryset = Student.objects.all().order_by('id')
     serializer_class = StudentSerializer
 
 
@@ -32,7 +32,7 @@ class DisciplineView(
 ):
     authentication_classes = (KeycloakAuthenticationBackend,)
     permission_classes = [IsAuthenticated]
-    queryset = Discipline.objects.all()
+    queryset = Discipline.objects.all().order_by('id')
     serializer_class = DisciplineSerializer
 
 
@@ -43,5 +43,5 @@ class StudyGroupView(
 ):
     authentication_classes = (KeycloakAuthenticationBackend,)
     permission_classes = [IsAuthenticated]
-    queryset = StudyGroup.objects.all()
+    queryset = StudyGroup.objects.all().order_by('id')
     serializer_class = StudyGroupSerializer

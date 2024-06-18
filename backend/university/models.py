@@ -20,3 +20,4 @@ class StudyGroup(models.Model):
     education_date_start = models.DateField()
     education_date_end = models.DateField()
     discipline = models.ForeignKey(Discipline, on_delete=models.PROTECT)
+    grade = models.IntegerField(max_length=2)
