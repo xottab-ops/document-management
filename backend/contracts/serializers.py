@@ -46,3 +46,8 @@ class ContractPostSerializer(serializers.ModelSerializer):
             "contract_price",
         ]
 
+
+class NotificationSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    amount = serializers.IntegerField(required=True)
+    full_name = serializers.CharField(required=True)
