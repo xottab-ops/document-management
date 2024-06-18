@@ -18,5 +18,5 @@ class CustomerView(
 ):
     authentication_classes = (KeycloakAuthenticationBackend,)
     permission_classes = [IsAuthenticated]
-    queryset = Customer.objects.all()
+    queryset = Customer.objects.all().order_by('id')
     serializer_class = CustomerSerializer
