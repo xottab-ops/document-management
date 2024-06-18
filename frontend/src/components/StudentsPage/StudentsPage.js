@@ -3,25 +3,33 @@ import axios from 'axios';
 import PageTemplate from '../PageTemplate/PageTemplate';
 import TableTemplate from "../generic/TableTemplate";
 import { headersStudents } from '../generic/consts';
+import { studentFields } from "../generic/FormFields";
+import OverlayForm from "../DynamicFormPage/OverlayForm";
 
 const StudentsPage = ({ apiEndpoint, token }) => {
     const [students, setStudents] = useState([]);
     const [selected, setSelected] = useState(null);
-
+    const [isOverlayVisible, setOverlayVisible] = useState(false);
+    const [isEdited, setIsEdited] = useState(false);
+    const fields = studentFields;
     const headers = headersStudents;
 
-    useEffect(() => {
-            axios.get(apiEndpoint, {
-                headers: {
-                    'Authorization': `Bearer ${token}` // Используем токен из пропсов
-                }
+    const fetchStudents = () => {
+        axios.get(apiEndpoint, {
+            headers: {
+                'Authorization': `Bearer ${token}` // Используем токен из пропсов
+            }
+        })
+            .then(response => {
+                setStudents(response.data);
             })
-                .then(response => {
-                    setStudents(response.data);
-                })
-                .catch(error => {
-                    console.error('Ошибка при загрузке данных', error);
-                });
+            .catch(error => {
+                console.error('Ошибка при загрузке данных', error);
+            });
+    }
+
+    useEffect(() => {
+            fetchStudents()
         },
         [apiEndpoint, token]);
 
@@ -29,18 +37,36 @@ const StudentsPage = ({ apiEndpoint, token }) => {
         setSelected(customer);
     };
 
-    const handleNewCustomerClick = () => {
-
+    const handleNewStudentClick = () => {
+        setIsEdited(false);
+        setSelected(null)
+        setOverlayVisible(true);
     };
 
+    const handleChangeStudentClick = () => {
+        if (selected) {
+            setIsEdited(true);
+            setOverlayVisible(true);
+        }
+        else {
+            alert("Вы не выбрали студента")
+        }
+    }
+
+    const handleCloseOverlay = () => {
+        setOverlayVisible(false);
+        fetchStudents();
+    };
 
     const footerButtons = [
-        { label: 'Создать нового студента', onClick: handleNewCustomerClick },
+        { label: 'Создать нового студента', onClick: handleNewStudentClick },
+        { label: 'Изменить студента', onClick: handleChangeStudentClick }
     ];
 
     const formatCustomerData = (student, index) => ({
         'name': student.name,
-        'phone_number': student.phone_number
+        'phone_number': student.phone_number,
+        "id": student.id
     });
 
     return (
@@ -52,6 +78,15 @@ const StudentsPage = ({ apiEndpoint, token }) => {
                 data={students.map(formatCustomerData)}
                 onRowClick={handleRowClick}
                 selectedRow={selected}
+            />
+            <OverlayForm
+                isVisible={isOverlayVisible}
+                fields={fields}
+                onClose={handleCloseOverlay}
+                initialValues={selected ? selected : null}
+                apiEndpoint={apiEndpoint}
+                isEdited={isEdited}
+                token={token}
             />
         </PageTemplate>
     );

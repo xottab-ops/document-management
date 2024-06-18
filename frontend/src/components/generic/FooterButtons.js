@@ -9,7 +9,6 @@ const Footer = ({ buttons }) => {
                     key={index}
                     onClick={button.onClick}
                     className="footer-button"
-                    disabled={button.disabled}
                 >
                     {button.label}
                 </button>

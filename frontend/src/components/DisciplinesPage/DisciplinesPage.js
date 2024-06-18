@@ -4,7 +4,7 @@ import PageTemplate from '../PageTemplate/PageTemplate';
 import TableTemplate from "../generic/TableTemplate";
 import { headersDisciplines } from '../generic/consts';
 
-const CustomersPage = ({ apiEndpoint, token }) => {
+const DisciplinesPage = ({ apiEndpoint, token }) => {
     const [disciplines, setDisciplines] = useState([]);
     const [selected, setSelected] = useState(null);
 
@@ -29,41 +29,25 @@ const CustomersPage = ({ apiEndpoint, token }) => {
         setSelected(discipline);
     };
 
-    const handleNewCustomerClick = () => {
 
-    };
-
-    const handleViewCustomerClick = () => {
-
-    };
-
-
-    const footerButtons = [
-        { label: 'Создать нового заказчика', onClick: handleNewCustomerClick },
-    ];
-
-    const formatCustomerData = (customer, index) => ({
-        'name': customer.name,
-        'phone_number': customer.phone_number,
-        'passport_number': customer.passport_number,
-        'passport_issuance': customer.passport_issuance,
-        'passport_registration': customer.passport_registration,
-        'passport_issue_date': customer.passport_issue_date,
-        'passport_division_code': customer.passport_division_code
+    const formatDisciplineData = (discipline, index) => ({
+        'name': discipline.name,
+        'lessons_per_week': discipline.lessons_per_week,
+        'lesson_time': discipline.lesson_time,
+        'discipline_price': discipline.discipline_price,
     });
 
     return (
         <PageTemplate
-            footerButtons={footerButtons}
         >
             <TableTemplate
                 headers={headers}
-                data={disciplines.map(formatCustomerData)}
+                data={disciplines.map(formatDisciplineData)}
                 onRowClick={handleRowClick}
-                selectedRow={selectedCustomer}
+                selectedRow={selected}
             />
         </PageTemplate>
     );
 };
 
-export default CustomersPage;
+export default DisciplinesPage;

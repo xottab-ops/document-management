@@ -1,7 +1,8 @@
 import React from 'react';
 import './TableTemplate.css';
 
-const TableTemplate = ({ headers, data, onRowClick, selectedRow }) => {
+const TableTemplate = ({ headers, data, onRowClick, selectedRow  }) => {
+
     return (
         <table>
             <thead>
@@ -13,10 +14,11 @@ const TableTemplate = ({ headers, data, onRowClick, selectedRow }) => {
             </thead>
             <tbody>
             {data.map((row, index) => (
+
                 <tr
                     key={index}
                     onClick={() => onRowClick(row)}
-                    className={selectedRow === row ? 'selected' : ''}
+                    className={selectedRow && selectedRow.id === row.id ? 'selected' : ''}
                 >
                     {Object.values(row).map((cell, cellIndex) => (
                         <td key={cellIndex}>{cell}</td>

@@ -3,40 +3,61 @@ import axios from 'axios';
 import PageTemplate from '../PageTemplate/PageTemplate';
 import './ContractsPage.css';
 import TableTemplate from "../generic/TableTemplate";
-import { useNavigate } from 'react-router-dom';
 import { headersContracts } from '../generic/consts'
+import OverlayContractForm, {OverlayContractViewForm} from "../DynamicFormPage/OverlayContractForm";
 
 const ContractsPage = ({ apiEndpoint, token }) => {
   const [contracts, setContracts] = useState([]);
   const [selectedContract, setSelectedContract] = useState(null);
-  const navigate = useNavigate();
+  const [isOverlayVisible, setOverlayVisible] = useState(false);
+  const [isOverlayViewVisible, setOverlayViewVisible] = useState(false);
   const headers = headersContracts;
 
-  useEffect(() => {
+  const fetchContracts = () => {
     axios.get(apiEndpoint, {
       headers: {
         'Authorization': `Bearer ${token}` // Используем токен из пропсов
       }
     })
-    .then(response => {
-      setContracts(response.data);
-    })
-    .catch(error => {
-      console.error('Ошибка при загрузке данных', error);
-    });
+        .then(response => {
+          setContracts(response.data);
+        })
+        .catch(error => {
+          console.error('Ошибка при загрузке данных', error);
+        });
+  }
+
+  useEffect(() => {
+    fetchContracts()
   },
       [apiEndpoint, token]);
+
+
 
   const handleRowClick = (contract) => {
     setSelectedContract(contract);
   };
 
   const handleNewContractClick = () => {
-      navigate('/pizdets');
+    setOverlayVisible(true);
   };
 
   const handleViewContractClick = () => {
+    if (selectedContract === null) {
+      alert("Выберите договор")
+    }
+    else{
+      setOverlayViewVisible(true)
+    }
+  };
 
+  const handleCloseOverlay = () => {
+    setOverlayVisible(false);
+    fetchContracts()
+  };
+
+  const handleCloseViewOverlay = () => {
+    setOverlayViewVisible(false);
   };
 
   const footerButtons = [
@@ -64,6 +85,19 @@ const ContractsPage = ({ apiEndpoint, token }) => {
         onRowClick={handleRowClick}
         selectedRow={selectedContract}
       />
+      <OverlayContractForm
+          isVisible={isOverlayVisible}
+          onClose={handleCloseOverlay}
+          apiEndpoint={apiEndpoint}
+          token={token}
+      />
+      <OverlayContractViewForm
+          isVisible={isOverlayViewVisible}
+          onClose={handleCloseViewOverlay}
+          contract={selectedContract}
+          contracts={contracts}/>
+
+
     </PageTemplate>
   );
 };

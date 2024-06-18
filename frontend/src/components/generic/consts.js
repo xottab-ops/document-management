@@ -4,12 +4,23 @@ const headersContracts = [
 ];
 
 const headersCustomers = [
-    'ФИО заказчика', 'Номер телефона', 'Серия и номер паспорта', 'Где выдали паспорт',
-    'Регистрация', 'Дата выдачи', 'Код подразделения'
+    'ФИО заказчика', 'Номер телефона', "Email", 'Серия и номер паспорта', 'Где выдали паспорт',
+    'Регистрация', 'Дата выдачи', 'Код подразделения', 'id'
 ];
 
 const headersStudents = [
-    'ФИО студента', 'Номер телефона'
+    'ФИО студента', 'Номер телефона', 'id'
 ]
 
-export { headersContracts, headersCustomers, headersStudents };
+const headersDisciplines = [
+    'Название дисциплины', 'Количество занятий в неделю', 'Длительность занятия',
+    'Стоимость дисциплины'
+]
+
+
+const headersStudyGroups = [
+    'Учебная группа', 'Дата начала занятий', 'Дата конца занятий',
+    'Название дисциплины', 'Количество занятий в неделю', 'Длительность занятия'
+]
+
+export { headersContracts, headersCustomers, headersStudents, headersDisciplines, headersStudyGroups };
