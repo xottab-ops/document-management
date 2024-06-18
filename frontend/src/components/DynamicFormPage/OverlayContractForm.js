@@ -18,6 +18,7 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
         customer: '',
         contract_creation_date: '',
         contract_expiration_date: '',
+        address: ''
     };
 
     const emptyValues = Object.keys(fields).reduce((acc, key) => ({ ...acc, [key]: '' }), {});
@@ -30,7 +31,9 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
             'contract_price': valuesContract.study_group.discipline.discipline_price,
             'contract_creation_date': valuesContract.contract_creation_date,
             'contract_expiration_date': valuesContract.contract_expiration_date,
-            'creator': username.id
+            'creator': username.id,
+            'address': valuesContract.address.id,
+            'is_online': valuesContract.is_online,
         }
 
         axios.post(apiEndpoint, content, {
@@ -74,7 +77,7 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
                                     setFieldValue={setFieldValue}
                                     value={values.customer}
                                 />
-                                <ErrorMessage name="customer" component="div" className="error" />
+                                <ErrorMessage name="customer" component="div" className="error"/>
                             </div>
 
                             <div className="form-group">
@@ -87,7 +90,7 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
                                     setFieldValue={setFieldValue}
                                     value={values.student}
                                 />
-                                <ErrorMessage name="student" component="div" className="error" />
+                                <ErrorMessage name="student" component="div" className="error"/>
                             </div>
 
                             <div className="form-group">
@@ -100,19 +103,37 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
                                     setFieldValue={setFieldValue}
                                     value={values.study_group}
                                 />
-                                <ErrorMessage name="study_group" component="div" className="error" />
+                                <ErrorMessage name="study_group" component="div" className="error"/>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="address">Место обучения:</label>
+                                <Dropdown
+                                    apiEndpoint="http://localhost:5000/addresses/"
+                                    token={token}
+                                    formatOption={(option) => `${option.id}. ${option.address}.`}
+                                    dropdownID="address"
+                                    setFieldValue={setFieldValue}
+                                    value={values.address}
+                                />
+                                <ErrorMessage name="address" component="div" className="error"/>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="contract_creation_date">Дата начала договора:</label>
-                                <Field type="date" id="contract_creation_date" name="contract_creation_date" />
-                                <ErrorMessage name="contract_creation_date" component="div" className="error" />
+                                <Field type="date" id="contract_creation_date" name="contract_creation_date"/>
+                                <ErrorMessage name="contract_creation_date" component="div" className="error"/>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="contract_expiration_date">Дата конца договора:</label>
-                                <Field type="date" id="contract_expiration_date" name="contract_expiration_date" />
-                                <ErrorMessage name="contract_expiration_date" component="div" className="error" />
+                                <Field type="date" id="contract_expiration_date" name="contract_expiration_date"/>
+                                <ErrorMessage name="contract_expiration_date" component="div" className="error"/>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="is_online">Онлайн?</label>
+                                <Field type="checkbox" id="is_online" name="is_online"/>
                             </div>
 
                             {errorMessage.length > 0 && (
@@ -135,7 +156,7 @@ const OverlayContractForm = ({ isVisible, onClose, apiEndpoint, token }) => {
 };
 
 
-const OverlayContractViewForm = ({ isVisible, onClose, contract, contracts, token }) => {
+const OverlayContractViewForm = ({isVisible, onClose, contract, contracts, token}) => {
     if (!isVisible) {
         return null;
     }

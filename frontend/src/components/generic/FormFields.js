@@ -65,6 +65,7 @@ const contractFields = Yup.object().shape({
     student: Yup.object().required('Выбрать студента обязательно'),
     customer: Yup.object().required('Выбрать заказчика обязательно'),
     study_group: Yup.object().required('Выбрать учебную группу обязательно'),
+    address: Yup.object().required('Выбрать место обучения обязательно'),
     contract_creation_date: Yup.date().required('Обязательно для заполнения | Дата введена не верно'),
     contract_expiration_date: Yup.date().min(Yup.ref('contract_creation_date'), 'Дата окончания не может быть раньше даты начала договора')
         .required('Обязательно для заполнения | Дата введена не верно')

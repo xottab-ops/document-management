@@ -67,3 +67,11 @@
     resize: none;
     box-sizing: border-box;
 }
+
+#is_online {
+    /* Центрируем чекбокс по горизонтали */
+    margin-left: auto;
+    margin-right: auto;
+    /* Добавляем отступ между чекбоксом и предыдущим элементом формы */
+    margin-top: 10px;
+}

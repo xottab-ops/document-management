@@ -65,7 +65,7 @@ const ContractsPage = ({ apiEndpoint, token }) => {
     { label: 'Просмотреть договор', onClick: handleViewContractClick, disabled: !selectedContract }
   ];
 
-  const formatContractData = (contract, index) => ({
+  const formatContractData = (contract) => ({
     'id': contract.id,
     'discipline': contract.study_group.discipline.name,
     'creator_name': `${contract.creator.last_name} ${contract.creator.first_name}`,
