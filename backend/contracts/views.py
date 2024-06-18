@@ -19,14 +19,9 @@ from contracts.serializers import (
 )
 from document_management_backend.authorization import KeycloakAuthenticationBackend
 
-
 from django.http import HttpResponse
 
 from document_management_backend.scripts.generate_docx import generate
-
-
-
-# Create your views here.
 
 
 class ContractsView(ReadOnlyModelViewSet, mixins.CreateModelMixin):
@@ -62,6 +57,8 @@ class ContractViewSet(ViewSet):
 
 
 class SendNotificationAPIView(ViewSet):
+    authentication_classes = (KeycloakAuthenticationBackend,)
+    permission_classes = [IsAuthenticated]
     serializer_class = NotificationSerializer
 
     @action(detail=False, methods=['post'])
@@ -73,7 +70,7 @@ class SendNotificationAPIView(ViewSet):
         amount = request.data.get('amount')
         subject = 'Уведомление о задолженности'
         recipient_list = [email]
-
+        print(request)
         message = render_to_string("index.html", {
             'full_name': full_name,
             'contract_number': contract_number,

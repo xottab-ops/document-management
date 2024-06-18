@@ -120,6 +120,10 @@ def generate(contract):
         "TOTAL_PRICE": contract.contract_price,
         "TOTAL_PRICE_STRING": get_string_by_number(contract.contract_price) + ' руб.',
 
+        "ADDRESS": contract.address.address,
+
+        "PLACE": "online" if contract.is_online else "очной",
+
         "LESSONS_PER_WEEK": str(contract.study_group.discipline.lessons_per_week),
         "LESSON_TIME": str(contract.study_group.discipline.lesson_time),
     }
