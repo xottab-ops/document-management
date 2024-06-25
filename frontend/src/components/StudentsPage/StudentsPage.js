@@ -49,7 +49,7 @@ const StudentsPage = ({ apiEndpoint, token }) => {
             setOverlayVisible(true);
         }
         else {
-            alert("Вы не выбрали студента")
+            alert("Вы не выбрали ученика")
         }
     }
 
@@ -59,8 +59,8 @@ const StudentsPage = ({ apiEndpoint, token }) => {
     };
 
     const footerButtons = [
-        { label: 'Создать нового студента', onClick: handleNewStudentClick },
-        { label: 'Изменить студента', onClick: handleChangeStudentClick }
+        { label: 'Создать нового ученика', onClick: handleNewStudentClick },
+        { label: 'Изменить данные ученика', onClick: handleChangeStudentClick }
     ];
 
     const formatCustomerData = (student, index) => ({

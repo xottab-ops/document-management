@@ -9,7 +9,7 @@ const headersCustomers = [
 ];
 
 const headersStudents = [
-    'ФИО студента', 'Номер телефона', 'id'
+    'ФИО ученика', 'Номер телефона', 'id'
 ]
 
 const headersDisciplines = [
