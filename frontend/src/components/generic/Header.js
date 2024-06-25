@@ -32,7 +32,7 @@ const Header = ({ handlerLogout }) => {
                     </li>
                     <li>
                         <NavLink to="/students" activeClassName="active">
-                            Студенты
+                            Ученики
                         </NavLink>
                     </li>
                     <li>

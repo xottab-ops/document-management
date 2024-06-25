@@ -49,7 +49,7 @@ const customerFields = {
 
 const studentFields = {
     name: {
-        label: 'ФИО студента',
+        label: 'ФИО ученика',
         validation: Yup.string().required('Фамилия Имя Отчество обязательно')
             .min(5, 'Фамилия Имя Отчество должно быть не менее 5 символов'),
     },
@@ -62,7 +62,7 @@ const studentFields = {
 };
 
 const contractFields = Yup.object().shape({
-    student: Yup.object().required('Выбрать студента обязательно'),
+    student: Yup.object().required('Выбрать ученика обязательно'),
     customer: Yup.object().required('Выбрать заказчика обязательно'),
     study_group: Yup.object().required('Выбрать учебную группу обязательно'),
     address: Yup.object().required('Выбрать место обучения обязательно'),
