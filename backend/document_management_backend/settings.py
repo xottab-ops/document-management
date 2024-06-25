@@ -44,9 +44,12 @@ INSTALLED_APPS = [
     "university",
     "rest_framework",
     "drf_spectacular",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -57,10 +60,24 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "document_management_backend.urls"
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.yandex.ru")
+EMAIL_PORT = os.getenv("EMAIL_PORT", "465")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "example@your_email_address")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "pass")
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [os.path.join(BASE_DIR, 'document_management_backend', 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

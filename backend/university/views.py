@@ -7,6 +7,9 @@ from document_management_backend.authorization import KeycloakAuthenticationBack
 from university.models import Student
 from university.serializers import StudentSerializer
 
+from university.models import Discipline, StudyGroup
+from university.serializers import DisciplineSerializer, StudyGroupSerializer
+
 
 # Create your views here.
 
@@ -18,5 +21,27 @@ class StudentView(
 ):
     authentication_classes = (KeycloakAuthenticationBackend,)
     permission_classes = [IsAuthenticated]
-    queryset = Student.objects.all()
+    queryset = Student.objects.all().order_by('id')
     serializer_class = StudentSerializer
+
+
+class DisciplineView(
+    ReadOnlyModelViewSet,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin
+):
+    authentication_classes = (KeycloakAuthenticationBackend,)
+    permission_classes = [IsAuthenticated]
+    queryset = Discipline.objects.all().order_by('id')
+    serializer_class = DisciplineSerializer
+
+
+class StudyGroupView(
+    ReadOnlyModelViewSet,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin
+):
+    authentication_classes = (KeycloakAuthenticationBackend,)
+    permission_classes = [IsAuthenticated]
+    queryset = StudyGroup.objects.all().order_by('id')
+    serializer_class = StudyGroupSerializer

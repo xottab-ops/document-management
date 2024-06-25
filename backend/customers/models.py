@@ -4,8 +4,9 @@ from django.db import models
 
 
 class Customer(models.Model):
-    name = models.CharField(max_length=64)
-    phone_number = models.IntegerField()
+    name = models.CharField(max_length=256)
+    email = models.EmailField(max_length=256, null=True, blank=True)
+    phone_number = models.CharField(max_length=32)
     passport_number = models.CharField(max_length=64, unique=True)
     passport_issuance = models.CharField(max_length=300)
     passport_issue_date = models.DateField()

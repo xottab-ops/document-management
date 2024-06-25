@@ -6,18 +6,20 @@ from university.models import Student, StudyGroup, Discipline
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ["name", "phone_number"]
+        fields = ["id", "name", "phone_number"]
 
 
 class DisciplineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discipline
-        fields = ["name", "lessons_per_week", "lesson_time"]
+        fields = ["name", "lessons_per_week", "lesson_time", "discipline_price"]
 
 
 class StudyGroupSerializer(serializers.ModelSerializer):
     discipline = DisciplineSerializer()
+    education_date_start = serializers.DateField(format="%d.%m.%Y")
+    education_date_end = serializers.DateField(format="%d.%m.%Y")
 
     class Meta:
         model = StudyGroup
-        fields = ["name", "education_date_start", "education_date_end", "discipline"]
+        fields = ["id", "name", "education_date_start", "education_date_end", "discipline", "grade"]
